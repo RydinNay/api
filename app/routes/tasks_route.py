@@ -7,12 +7,12 @@ bp_tasks = Blueprint('tasks', __name__)
 
 @bp_tasks.route('/Tasks/add', methods = ['POST'])
 def add():
-    #data = request.get_json()
-    task_dist = request.args.get("dist")
-    task_weight = request.args.get("weight")
-    task_desc = request.args.get("desc")
+    data = request.get_json()
+    task_dist = data.get("dist")
+    task_weight = data.get("weight")
+    task_desc = data.get("desc")
     task_datetime = datetime.now()
-    task_clientid = request.args.get("clientid")
+    task_clientid = data.get("clientid")
 
     try:
         new_task = Tasks(Dist = task_dist, Weight = task_weight,
