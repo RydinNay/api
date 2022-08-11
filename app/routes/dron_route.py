@@ -1,6 +1,6 @@
 from flask import request, jsonify, Blueprint
 from app.database import db
-from app.models import Drons, DronsSchema
+from app.models import Drons, DronsSchema, Tasks, DronsOnTasks
 from flask_cors import CORS, cross_origin
 
 bp_dron = Blueprint('dron', __name__)
@@ -103,6 +103,17 @@ def edit():
 def select():
     dron_baseid = request.args.get("baseid")
     dron = Drons.query.filter_by(DrDronBaseid = dron_baseid).all()
+    dron_schema = DronsSchema(many = True)
+    output = dron_schema.dump(dron)
+
+    return jsonify(output)
+
+@bp_dron.route('/Dron/select_for_client', methods = ['GET'])
+@cross_origin()
+def select_for_client():
+    clientid = request.args.get("clientid")
+    dron = Drons.query.join(DronsOnTasks, DronsOnTasks.DoTDronid == Drons.Dronid).join(Tasks, Tasks.Taskid == DronsOnTasks.DoTTaskid).filter(Tasks.Task_Clientid == clientid).all()
+    print(dron)
     dron_schema = DronsSchema(many = True)
     output = dron_schema.dump(dron)
 

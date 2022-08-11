@@ -68,9 +68,6 @@ class DronsSchema(ma.SQLAlchemyAutoSchema):
         model = Drons
 
 
-
-
-
 class Users(db.Model):
     Userid = db.Column(db.Integer, primary_key = True)
     UserName = db.Column(db.String(50), nullable = False)
@@ -80,8 +77,19 @@ class Users(db.Model):
     UserRoleid = db.Column(db.Integer, db.ForeignKey('roles.Roleid'), nullable = False)
     UserDronBaseid = db.Column(db.Integer, db.ForeignKey('drone_bases.DronBaseid'), nullable = False)
 
+    def __repr__(self):
+        return f"Users('{self.Userid}', '{self.UserName}', '{self.UserDronBaseid}', '{self.UserEmail}', '{self.UserTel}')"
 
-#class UsersSchema(ma.ModelSchema):
+    def serialize(self):
+        return {
+            'Userid': self.Userid,
+            'UserName': self.UserName,
+            'UserDronBaseid': self.UserDronBaseid,
+            'UserEmail': self.UserEmail,
+            'UserTel': self.UserTel
+        }
+
+#class UsersSchema(ma.SQLAlchemyAutoSchema):
 #    class Meta:
 #        model = Users
 
@@ -93,14 +101,9 @@ class DroneBases(db.Model):
     drons_on_tasks = db.relationship('DronsOnTasks', backref = 'drone_bases', lazy = True)
     users = db.relationship('Users', backref = 'drone_bases', lazy = True)
 
-#class DroneBasesSchema(ma.ModelSchema):
-#    class Meta:
-#        model = DroneBases
-
-
-
-
-
+class DroneBasesSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = DroneBases
 
 
 class Roles(db.Model):
@@ -108,8 +111,6 @@ class Roles(db.Model):
     RoleName = db.Column(db.String(50), nullable = False)
     RoleDesc = db.Column(db.String(200), nullable = False)
     user = db.relationship('Users', backref = 'roles', lazy = True)
-
-
 
 
 #class RolesSchema(ma.ModelSchema):

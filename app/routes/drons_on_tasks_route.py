@@ -218,7 +218,6 @@ def select_for_user():
     output = dot_schema.dump(dron_on_task)
     return jsonify(
        list(map(lambda item: item.serialize(), dron_on_task))
-
     )
 
 
@@ -231,6 +230,6 @@ def select_for_client():
     dot_schema = DronsOnTasksSchema(many = True)
     output = dot_schema.dump(dron_on_task)
     return jsonify(
-        output
+        list(map(lambda item: item.serialize(), dron_on_task))
     )
 
