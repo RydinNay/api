@@ -8,6 +8,7 @@ from app.routes.tasks_route import bp_tasks
 from app.routes.users_route import bp_user
 from app.routes.drons_on_tasks_route import bp_drons_on_tasks
 from app.routes.dron_base_route import bp_dron_base
+from app.routes.statistic_route import bp_statistic
 
 
 migration = Migrate()
@@ -35,3 +36,4 @@ app.register_blueprint(bp_user)
 app.register_blueprint(bp_tasks)
 app.register_blueprint(bp_drons_on_tasks)
 app.register_blueprint(bp_dron_base)
+app.register_blueprint(bp_statistic)

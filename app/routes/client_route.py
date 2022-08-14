@@ -8,11 +8,11 @@ bp_client = Blueprint('client', __name__)
 
 @bp_client.route('/Client/register', methods = ['POST'])
 def register():
-    #data = request.get_json()
-    client_name = request.args.get("username")
-    client_email = request.args.get("email")
-    client_tel = request.args.get("telephon")
-    client_pass = generate_password_hash(request.args.get("password"))
+    data = request.get_json()
+    client_name = data.get("username")
+    client_email = data.get("email")
+    client_tel = data.get("telephon")
+    client_pass = generate_password_hash(data.get("password"))
 
     try:
         new_client = Clients(CliName = client_name, CliEmail = client_email,
@@ -32,7 +32,7 @@ def register():
     })
 
 
-@bp_client.route('/Client/login', methods = ['POST'])
+@bp_client.route('/Client/login', methods = ['GET'])
 def login():
     #data = request.get_json()
     #client_name = data.get("username")
@@ -48,7 +48,7 @@ def login():
         return jsonify({
             "status": "failed",
             "message": "Failed getting user"
-        }), 401
+        })#, 401
 
     #access_token = create_access_token(identity=client_email)
 

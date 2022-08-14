@@ -1,6 +1,27 @@
-from flask import Flask
 from app.database import db,ma
-from flask_marshmallow import Marshmallow, Schema
+
+
+class DronOnTaskStatistic(db.Model):
+    Statisticid = db.Column(db.Integer, primary_key = True)
+    Status = db.Column(db.Boolean, nullable = False)
+    Dronid = db.Column(db.Integer, db.ForeignKey('drons.Dronid'), nullable = False)
+    TaskDesc = db.Column(db.String, nullable = False)
+    DronBaseid = db.Column(db.Integer, db.ForeignKey('drone_bases.DronBaseid'), nullable = False)
+    Data = db.Column(db.DateTime, nullable = False)
+
+    def __repr__(self):
+        return f"DronOnTaskStatistic('{self.Statisticid}', '{self.Status}', '{self.TaskDesc}', '{self.Dronid}', '{self.DronBaseid}', '{self.Data}')"
+
+    def serialize(self):
+        return {
+            'Statisticid': self.Statisticid,
+            'Status': self.Status,
+            'TaskDesc': self.TaskDesc,
+            'Dronid': self.Dronid,
+            'DronBaseid': self.DronBaseid,
+            'Data': self.Data
+        }
+
 
 class DronsOnTasks(db.Model):
     DronTaskid = db.Column(db.Integer, primary_key = True)

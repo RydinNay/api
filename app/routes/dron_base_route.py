@@ -10,11 +10,11 @@ bp_dron_base = Blueprint('dron_base', __name__)
 @bp_dron_base.route('/Dron_Bases', methods = ['POST'])
 def add():
     data = request.get_json()
-    compay_name = data.get("dron_base_name")
+    company_name = data.get("dron_base_name")
     company_pass = data.get("dron_base_pass")
 
     try:
-        new_dron_base = DroneBases(CompanyName = compay_name, CompanyPass = company_pass)
+        new_dron_base = DroneBases(CompanyName = company_name, CompanyPass = company_pass)
         db.session.add(new_dron_base)
         db.session.commit()
     except:
