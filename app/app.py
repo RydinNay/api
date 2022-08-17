@@ -1,6 +1,7 @@
-from flask import Flask, jsonify
+from flask import Flask
 from flask_migrate import Migrate
 from flask_cors import CORS
+from apscheduler.schedulers.background import BackgroundScheduler
 from app.database import db,ma
 from app.routes.client_route import bp_client
 from app.routes.dron_route import bp_dron
@@ -11,12 +12,13 @@ from app.routes.dron_base_route import bp_dron_base
 from app.routes.statistic_route import bp_statistic
 
 
+
 migration = Migrate()
 app = Flask(__name__)
+
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dronzi.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
-#app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 db.init_app(app)
@@ -25,9 +27,13 @@ migration.init_app(app, db)
 
 ma.init_app(app)
 
-@app.route('/')
-def index():
-    return jsonify("API in Currently online")
+
+
+
+
+#@app.route('/')
+#def index():
+#    return jsonify("API in Currently online")
 
 
 app.register_blueprint(bp_client)
@@ -37,3 +43,12 @@ app.register_blueprint(bp_tasks)
 app.register_blueprint(bp_drons_on_tasks)
 app.register_blueprint(bp_dron_base)
 app.register_blueprint(bp_statistic)
+
+from app.scripts.statistic_add import add_statistic
+
+
+scheduler = BackgroundScheduler()
+
+scheduler.add_job(add_statistic, trigger="interval", seconds=10)
+
+scheduler.start()

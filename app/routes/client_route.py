@@ -28,7 +28,12 @@ def register():
 
     return jsonify({
         "status": "success",
-        "message": "User added successfully"
+        "message": "User added successfully",
+        "data": {
+            "id": new_client.Clientid,
+            #"token": access_token,
+            "email": new_client.CliEmail
+    }
     })
 
 
