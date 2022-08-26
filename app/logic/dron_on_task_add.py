@@ -1,8 +1,7 @@
 from flask import jsonify
 from app.database import db
-from datetime import datetime
 from dateutil.parser import parse
-from app.models import DronsOnTasks, Drons, Tasks, DronsOnTasksSchema, DronsSchema, TasksSchema
+from app.models import DronsOnTasks, Drons, Tasks
 
 def dron_on_task_add(task_data, dron_data, drontask_baseid):
     for i in range(0, len(task_data)):
