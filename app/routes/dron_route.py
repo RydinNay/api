@@ -33,6 +33,7 @@ def add():
         "message": "Dron added successfully"
     }), 201
 
+
 @bp_dron.route('/Dron', methods = ['DELETE'])
 def remove():
 
@@ -88,14 +89,10 @@ def edit():
                 "status":"error"
             })
 
-
-
-
     return jsonify({
         "status":"succsed",
         "mesage":"Dron edit succesfully"
     })
-
 
 
 @bp_dron.route('/Dron', methods = ['GET'])
