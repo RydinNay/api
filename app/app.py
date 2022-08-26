@@ -12,7 +12,6 @@ from app.routes.dron_base_route import bp_dron_base
 from app.routes.statistic_route import bp_statistic
 
 
-
 migration = Migrate()
 app = Flask(__name__)
 
@@ -20,21 +19,11 @@ CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dronzi.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 
-
 db.init_app(app)
 
 migration.init_app(app, db)
 
 ma.init_app(app)
-
-
-
-
-
-#@app.route('/')
-#def index():
-#    return jsonify("API in Currently online")
-
 
 app.register_blueprint(bp_client)
 app.register_blueprint(bp_dron)

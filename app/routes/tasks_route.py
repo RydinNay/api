@@ -2,6 +2,7 @@ from flask import request, jsonify, Blueprint
 from app.database import db
 from app.models import Tasks, TasksSchema
 from datetime import datetime
+from dateutil.parser import parse
 
 bp_tasks = Blueprint('tasks', __name__)
 
@@ -11,7 +12,7 @@ def add():
     task_dist = data.get("dist")
     task_weight = data.get("weight")
     task_desc = data.get("desc")
-    task_datetime = datetime.now()
+    task_datetime = parse(data.get("datetime"))
     task_clientid = data.get("clientid")
 
     try:

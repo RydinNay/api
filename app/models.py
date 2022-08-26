@@ -99,7 +99,7 @@ class Users(db.Model):
     UserDronBaseid = db.Column(db.Integer, db.ForeignKey('drone_bases.DronBaseid'), nullable = False)
 
     def __repr__(self):
-        return f"Users('{self.Userid}', '{self.UserName}', '{self.UserDronBaseid}', '{self.UserEmail}', '{self.UserTel}')"
+        return f"Users('{self.Userid}', '{self.UserName}', '{self.UserDronBaseid}', '{self.UserEmail}', '{self.UserTel}', '{self.UserRoleid}')"
 
     def serialize(self):
         return {
@@ -107,7 +107,8 @@ class Users(db.Model):
             'UserName': self.UserName,
             'UserDronBaseid': self.UserDronBaseid,
             'UserEmail': self.UserEmail,
-            'UserTel': self.UserTel
+            'UserTel': self.UserTel,
+            'UserRoleid': self.UserRoleid
         }
 
 #class UsersSchema(ma.SQLAlchemyAutoSchema):

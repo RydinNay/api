@@ -1,6 +1,7 @@
 from flask import request, jsonify, Blueprint
 from app.database import db
 from datetime import datetime
+from dateutil.parser import parse
 from app.models import DronsOnTasks, Drons, Tasks, DronsOnTasksSchema, DronsSchema, TasksSchema
 
 bp_drons_on_tasks = Blueprint('drons_on_tasks', __name__)
@@ -11,7 +12,7 @@ def add_common():
     data = request.get_json()
     drontask_drons = data.get("drons")
     drontask_tasks = data.get("tasks")
-    #drontask_date = datetime.now()
+    #drontask_date = parse(data.get("datetime"))
     drontask_baseid = data.get("baseid")
 
     task = Tasks.query.filter(Tasks.Taskid.in_(drontask_tasks)).all()
@@ -71,7 +72,7 @@ def add_common():
                 })
 
             new_dronontask = DronsOnTasks(DoTDronid = dron_data[best_dronid]["Dronid"], DoTTaskid = task_data[i]["Taskid"],
-                                          Date = datetime.now(), DoTBaseid = drontask_baseid)
+                                          Date = parse(task_data[i]["Date"]), DoTBaseid = drontask_baseid)
             db.session.add(new_dronontask)
             db.session.commit()
 
@@ -151,7 +152,7 @@ def add_auto():
                 })
 
             new_dronontask = DronsOnTasks(DoTDronid = dron_data[best_dronid]["Dronid"], DoTTaskid = task_data[i]["Taskid"],
-                                  Date = datetime.now(), DoTBaseid = drontask_baseid)
+                                  Date = parse(task_data[i]["Date"]), DoTBaseid = drontask_baseid)
             db.session.add(new_dronontask)
             db.session.commit()
 

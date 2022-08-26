@@ -128,8 +128,8 @@ def login():
 @bp_user.route('/Users/all', methods = ['GET'])
 def all_users():
     baseid=request.args.get("baseid")
-    users = Users.query.filter(Users.UserDronBaseid == baseid)
-
+    users = Users.query.filter(Users.UserDronBaseid == baseid, Users.UserRoleid != 1).all()
+    print(users)
     #users_schema = UsersSchema(many=True)
     #users_data = users_schema.dump(users)
     return jsonify(
